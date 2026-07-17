@@ -4,7 +4,7 @@ slug: human-layer-becomes-the-differentiator
 pillar: P8
 audience: CXO, board, People leaders
 route: go
-service_url: https://teambeam.in/why-teambeam
+service_path: /why-teambeam
 service_label: See how we measure what changed
 date: 2026-07-16
 summary: When every organisation runs on similar tools, the tools stop being the edge. What separates one company from another is the quality of its human layer — and whether it can prove that layer is getting stronger.

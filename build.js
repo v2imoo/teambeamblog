@@ -23,10 +23,11 @@ const SITE = {
   email: 'start@teambeam.in',
   homes: { in: 'https://teambeam.in', us: 'https://teambeam.us', go: 'https://teambeam.in/go' },
   social: {
-    LinkedIn: 'https://www.linkedin.com/company/teambeamoutings',
+    LinkedIn: 'https://www.linkedin.com/company/teambeam',
+    Instagram: 'https://www.instagram.com/teambeamoutings',
     X: 'https://x.com/teambeamoutings',
-    Threads: 'https://www.threads.net/@teambeamoutings',
-    Instagram: 'https://www.instagram.com/teambeamoutings'
+    YouTube: 'https://www.youtube.com/@teambeamoutings',
+    Facebook: 'https://www.facebook.com/teambeamoutings'
   },
   ogImage: 'https://teambeam.blog/assets/og-default.png'
 };
@@ -204,7 +205,9 @@ function footer(){
   // Progressive geo hint: default stays neutral (/go); only redirect the CTA target, never the page.
   try{var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';var host='${SITE.homes.go}';
     if(/Kolkata|Calcutta/.test(tz))host='${SITE.homes.in}';else if(/America|US\\/|New_York|Chicago|Denver|Los_Angeles/.test(tz))host='${SITE.homes.us}';
-    document.querySelectorAll('[data-geo-cta]').forEach(function(a){a.setAttribute('href',host);});}catch(e){}
+    document.querySelectorAll('[data-geo-cta]').forEach(function(a){a.setAttribute('href',host);});
+    var sbase=/Kolkata|Calcutta/.test(tz)?'${SITE.homes.in}':(/America|New_York|Chicago|Denver|Los_Angeles/.test(tz)?'${SITE.homes.us}':'${SITE.homes.in}');
+    document.querySelectorAll('[data-geo-svc]').forEach(function(a){var p=a.getAttribute('data-path');if(p)a.setAttribute('href',sbase+p);});}catch(e){}
 })();
 </script>
 </body></html>`;
@@ -247,8 +250,10 @@ function articlePage(a, all){
   ];
   if(faq.length) nodes.push({ '@type':'FAQPage', mainEntity: faq.map(f=>({'@type':'Question',name:f.q,acceptedAnswer:{'@type':'Answer',text:f.a}})) });
 
-  const home = a.route==='in'?SITE.homes.in : a.route==='us'?SITE.homes.us : SITE.homes.go;
-  const svcUrl = a.service_url || home;
+  const svcPath = a.service_path || '';
+  const svcBase = a.route==='us' ? SITE.homes.us : SITE.homes.in; // neutral + India default to .in
+  const geoSvc = a.route==='go' && svcPath; // only neutral articles swap host to the reader's home
+  const svcUrl = svcPath ? svcBase+svcPath : (a.service_url || svcBase);
   const svcLabel = a.service_label || 'See how we work';
 
   const relHtml = `
@@ -274,7 +279,7 @@ function articlePage(a, all){
     <aside class="art__cta">
       <p class="art__ctahead">Want this for your team?</p>
       <p>Tell us what you are trying to change. Write to <a href="mailto:${SITE.email}">${SITE.email}</a>, or see the work.</p>
-      <a class="cta" href="${attr(svcUrl)}">${esc(svcLabel)}</a>
+      <a class="cta" href="${attr(svcUrl)}"${geoSvc?` data-geo-svc data-path="${attr(svcPath)}"`:''}>${esc(svcLabel)}</a>
     </aside>
     ${faqHtml}
   </article>

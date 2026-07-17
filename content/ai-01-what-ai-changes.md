@@ -4,7 +4,7 @@ slug: what-ai-changes-about-team-work
 pillar: P8
 audience: CXO, board, People leaders
 route: go
-service_url: https://teambeam.in/why-teambeam
+service_path: /why-teambeam
 service_label: See why measurement is the point
 date: 2026-07-17
 summary: The question has moved from whether AI takes jobs to how work changes. As tools absorb the task layer, the human layer decides outcomes — and that is exactly the layer most teams have never measured.
