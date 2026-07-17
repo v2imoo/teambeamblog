@@ -45,6 +45,7 @@ const PILLARS = {
   P10: { slug: 'behind-the-work',   name: 'Behind the Work',        color: '#5A6B7B', blurb: 'Facilitators, venue and experience partners, collaborators.' }
 };
 const BEAM = Object.values(PILLARS).map(p => p.color); // the spectrum strip
+const BUILD_ID = Date.now(); // cache-bust the stylesheet on every deploy
 
 /* ---------------------------------------------------------------- HELPERS */
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -130,7 +131,7 @@ function head(p){
 <meta name="twitter:description" content="${attr(p.desc)}">
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Bricolage.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Jakarta.woff2" crossorigin>
-<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/styles.css?v=${BUILD_ID}">
 <link rel="alternate" type="application/rss+xml" title="TeamBeam Blog" href="/rss.xml">
 ${jsonLd(graph)}
 </head>
@@ -163,7 +164,7 @@ function header(){
   </div>
   <div class="beam" aria-hidden="true">${BEAM.map(c=>`<i style="background:${c}"></i>`).join('')}</div>
 </header>
-<div class="drawer" id="drawer" hidden>
+<div class="drawer" id="drawer">
   <a href="/insights/">All insights</a>
   ${Object.entries(PILLARS).map(([k,p])=>`<a href="/${p.slug}/" style="--c:${p.color}"><span class="dot"></span>${esc(p.name)}</a>`).join('')}
   <a href="/about/">About</a>
@@ -195,7 +196,8 @@ function footer(){
 <script>
 (function(){
   var b=document.querySelector('.burger'),d=document.getElementById('drawer');
-  if(b&&d){b.addEventListener('click',function(){var o=d.hasAttribute('hidden');if(o){d.removeAttribute('hidden');}else{d.setAttribute('hidden','');}b.setAttribute('aria-expanded',String(o));b.classList.toggle('open',o);});}
+  if(b&&d){b.addEventListener('click',function(){var o=!d.classList.contains('open');d.classList.toggle('open',o);b.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));});
+    d.querySelectorAll('a').forEach(function(l){l.addEventListener('click',function(){d.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false');});});}
   var mb=document.querySelector('.megabtn'),mg=document.getElementById('mega');
   if(mb){mb.addEventListener('click',function(){var o=mb.getAttribute('aria-expanded')==='true';mb.setAttribute('aria-expanded',String(!o));mg.classList.toggle('open',!o);});
     document.addEventListener('click',function(e){if(!e.target.closest('.has-mega')){mb.setAttribute('aria-expanded','false');mg.classList.remove('open');}});}
