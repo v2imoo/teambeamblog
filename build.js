@@ -318,16 +318,51 @@ function homePage(all){
   ];
   const tiles = Object.entries(PILLARS).map(([k,p])=>
     `<a class="tile" href="/${p.slug}/" style="--c:${p.color}"><span class="tile__dot"></span><span class="tile__name">${esc(p.name)}</span><span class="tile__blurb">${esc(p.blurb)}</span></a>`).join('');
-  return head({path:'/', title:'TeamBeam Blog — designing, delivering and measuring teams', desc:'A knowledge resource on team health, measurement, and the human layer of work — for the people who decide.', ai:'TeamBeam Blog teaches decision-makers how to think about team health, measurement (Day 14/30/60), and the human layer of work as AI reshapes it. One business, two homes: teambeam.in and teambeam.us.', nodes}) + `
-  <section class="hero">
-    <p class="hero__eyebrow">A TeamBeam resource · ${esc(SITE.strap)}</p>
-    <h1 class="hero__h">Teams are built on purpose,<br>not by accident.</h1>
-    <p class="hero__sub">We design, deliver and measure the experiences that make teams and organisations work. This is where we think out loud about how — for the people who decide.</p>
-    <div class="hero__cta"><a class="cta" href="/insights/">Read the insights</a><a class="cta cta--ghost" data-geo-cta href="${SITE.homes.go}">Talk to us</a></div>
+  return head({path:'/', title:'TeamBeam Outings — designed, delivered, measured', desc:'TeamBeam Outings designs, delivers and measures corporate team experiences. One business, two homes — teambeam.in for India and the world, teambeam.us for the USA.', ai:'TeamBeam Outings is one business with two homes — teambeam.in (India and worldwide) and teambeam.us (USA). It designs, delivers and measures corporate team experiences, offsites and retreats, using a five-stage method (Scan, Design, Build, Deliver, Measure) and Day 14/30/60 measurement. This site also hosts its insights on team health and the human layer of work.', nodes}) + `
+  <section class="hero hero--brand">
+    <p class="hero__eyebrow">TeamBeam Outings · ${esc(SITE.strap)}</p>
+    <h1 class="hero__h">Designed. Delivered. <span class="grad">Measured.</span></h1>
+    <p class="hero__sub">We design, deliver and measure corporate team experiences — offsites, retreats and the everyday moments that make teams and organisations work. One business, at home wherever your team sits.</p>
+    <div class="hero__cta"><a class="cta" data-geo-cta href="${SITE.homes.go}">Talk to us</a><a class="cta cta--ghost" href="#insights">Read the insights</a></div>
+  </section>
+
+  <section class="approach">
+    <h2 class="sech">What we do</h2>
+    <p class="approach__lead">We build team experiences around evidence, not habit — and then we measure whether they worked. Every engagement runs through one method.</p>
+    <div class="approach__steps">
+      <span>Scan</span><span>Design</span><span>Build</span><span>Deliver</span><span>Measure</span>
+    </div>
+    <div class="approach__range">
+      <div><h3>Team experiences</h3><p>Focused experiences that build the specific thing a team is missing — from a few hours to a full day.</p></div>
+      <div><h3>Offsites &amp; retreats</h3><p>Multi-day offsites and retreats, sourced, planned and run end to end, anywhere in the world.</p></div>
+      <div><h3>Occasions</h3><p>Marking the moments that matter — inclusively, with meaning, and without the usual clichés.</p></div>
+      <div><h3>Measurement</h3><p>We read team health before and after, at Day 14, 30 and 60, so you can prove the change held.</p></div>
+    </div>
+  </section>
+
+  <section class="homes">
+    <h2 class="sech">One business, two homes</h2>
+    <p class="homes__lead">Wherever your team sits, there is a home for you. The same business, the same method, the same people — two front doors, not two companies.</p>
+    <div class="homes__grid">
+      <a class="homecard" href="${SITE.homes.in}">
+        <span class="homecard__eyebrow">India &amp; worldwide</span>
+        <span class="homecard__name">teambeam.in</span>
+        <span class="homecard__go">Enter <span aria-hidden="true">&rarr;</span></span>
+      </a>
+      <a class="homecard" href="${SITE.homes.us}">
+        <span class="homecard__eyebrow">United States</span>
+        <span class="homecard__name">teambeam.us</span>
+        <span class="homecard__go">Enter <span aria-hidden="true">&rarr;</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="insights-intro" id="insights">
+    <h2 class="ins-h">Insights</h2>
+    <p>Where we think out loud about team health, measurement, and the human layer of work — for the people who decide.</p>
   </section>
 
   <section class="tiles">
-    <h2 class="sech">Where we go deep</h2>
     <div class="tiles__grid">${tiles}</div>
   </section>
 
@@ -345,7 +380,7 @@ function homePage(all){
   </section>`:''}
 
   <section class="latest">
-    <div class="sech__row"><h2 class="sech">Latest</h2><a class="sech__all" href="/insights/">All insights &rarr;</a></div>
+    <div class="sech__row"><h2 class="sech">Latest insights</h2><a class="sech__all" href="/insights/">All insights &rarr;</a></div>
     <div class="grid grid--3">${latest.map(card).join('')}</div>
   </section>
 
