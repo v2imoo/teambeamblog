@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inversion &middot; Navigator</title>
+<meta name="description" content="Solve the problem backwards — ask how to guarantee failure, then avoid it.">
+<link rel="canonical" href="https://navigator.blog/decision-tools/inversion/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="author" content="Vijay"><meta name="theme-color" content="#B45309">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Navigator">
+<meta property="og:title" content="Inversion"><meta property="og:description" content="Solve the problem backwards — ask how to guarantee failure, then avoid it.">
+<meta property="og:url" content="https://navigator.blog/decision-tools/inversion/"><meta property="og:image" content="https://navigator.blog/assets/img/og.svg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Inversion">
+<meta name="twitter:description" content="Solve the problem backwards — ask how to guarantee failure, then avoid it."><meta name="twitter:image" content="https://navigator.blog/assets/img/og.svg">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Inversion", "description": "Solve the problem backwards — ask how to guarantee failure, then avoid it.", "author": {"@type": "Person", "name": "Vijay"}, "publisher": {"@type": "Organization", "name": "Navigator"}, "mainEntityOfPage": "https://navigator.blog/decision-tools/inversion/", "inLanguage": "en"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://navigator.blog/"}, {"@type": "ListItem", "position": 2, "name": "Decision Tools", "item": "https://navigator.blog/decision-tools/"}, {"@type": "ListItem", "position": 3, "name": "Inversion", "item": "https://navigator.blog/decision-tools/inversion/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why is failure easier to define than success?", "acceptedAnswer": {"@type": "Answer", "text": "Success has many uncertain paths; the obvious ways to fail are usually few and clear, so removing them is tractable."}}, {"@type": "Question", "name": "Is inversion just risk assessment?", "acceptedAnswer": {"@type": "Answer", "text": "Related, but broader — it is a general habit of flipping a problem, useful for planning as well as risk."}}, {"@type": "Question", "name": "Can I use it on personal goals?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — ‘how would I ruin my health / finances / relationship?’ produces a sharp list of things to stop doing."}}]}</script>
+</head>
+<body data-accent="decision-tools">
+<div class="topbar">A new breakdown every week &mdash; <a href="../../newsletter/">read the newsletter &rarr;</a></div>
+<div class="spectrum-rule"></div>
+<header class="site-header"><div class="wrap nav">
+<a class="brand" href="../../"><span class="theta">&#920;</span>&nbsp;NAVIGATOR</a>
+<nav class="nav-links" aria-label="Primary">
+<a href="../../people/">People</a><a href="../../businesses/">Businesses</a>
+<div class="drop"><button aria-haspopup="true">Strategies &#9662;</button><div class="drop-menu">
+<a href="../../mental-models/">Mental Models</a><a href="../../decision-tools/">Decision Tools</a>
+<a href="../../business-models/">Business Models</a><a href="../../frameworks/">Frameworks</a><a href="../../moats/">Moats</a></div></div>
+<div class="drop"><button aria-haspopup="true">Learn &#9662;</button><div class="drop-menu">
+<a href="../../books/">Book Summaries</a><a href="../../reading-lists/">Reading Lists</a>
+<a href="../../guides/">Guides</a><a href="../../quotes/">Quote Collections</a><a href="../../paths/">Learning Paths</a></div></div>
+<a href="../../tools/">Tools</a><a href="../../ai/">AI</a><a href="../../about/">About</a></nav>
+<button class="menu-btn" id="menuBtn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</div></header>
+<div class="drawer" id="drawer"><div class="drawer-panel">
+<button class="drawer-close" data-close aria-label="Close menu">&times;</button>
+<a href="../../people/">People</a><a href="../../businesses/">Businesses</a><a href="../../tools/">Tools</a>
+<details class="drawer-group" open><summary>Strategies</summary>
+<a href="../../mental-models/">Mental Models</a><a href="../../decision-tools/">Decision Tools</a>
+<a href="../../business-models/">Business Models</a><a href="../../frameworks/">Frameworks</a><a href="../../moats/">Moats</a></details>
+<details class="drawer-group"><summary>Learn</summary>
+<a href="../../books/">Book Summaries</a><a href="../../reading-lists/">Reading Lists</a>
+<a href="../../guides/">Guides</a><a href="../../quotes/">Quote Collections</a><a href="../../paths/">Learning Paths</a></details>
+<a href="../../ai/">Artificial Intelligence</a><a href="../../newsletter/">Newsletter</a>
+<a href="../../about/">About</a><a href="../../contact/">Contact</a>
+<button class="btn ghost" id="a11yToggle" style="margin-top:14px">Aa Readable font</button>
+</div></div>
+<div class="head-band"><div class="wrap">
+<nav class="crumbs"><a href="../../">Home</a> &rsaquo; <a href="../../decision-tools/">Decision Tools</a> &rsaquo; <a href="../../decision-tools/">Tools</a> &rsaquo; Inversion</nav>
+<span class="eyebrow">Decision Tools</span><h1>Inversion</h1>
+<p class="lede">Solve the problem backwards — ask how to guarantee failure, then avoid it.</p></div></div>
+<div class="wrap"><div class="article">
+<nav class="toc" aria-label="Contents"><div class="toc-h">Contents</div><div id="toc"></div></nav>
+<article class="doc">
+<h2>Overview</h2><p>Inversion attacks a problem from the opposite end. Instead of asking ‘how do I achieve this?’ you ask ‘how would I guarantee the opposite — how do I fail completely?’ — then you systematically avoid everything on that list. Charlie Munger’s formulation: all he wanted to know was where he would die, so he’d never go there.</p><p>The technique works because avoiding disaster is often clearer and more tractable than pursuing success. The paths to failure are frequently more obvious than the paths to victory, and removing them clears the road.</p>
+<h2>When to use it</h2><p>A goal is hard to plan toward directly, or you want to stress-test a plan for hidden ways it could fail.</p>
+<h2>How to use it</h2><div class="principle"><span class="p-n">Step 1</span><h3>State the goal</h3><p>Name what you want to achieve.</p></div><div class="principle"><span class="p-n">Step 2</span><h3>Invert it</h3><p>Ask how you could guarantee the exact opposite outcome — total failure.</p></div><div class="principle"><span class="p-n">Step 3</span><h3>List the failure modes</h3><p>Brainstorm everything that would cause that failure, freely and honestly.</p></div><div class="principle"><span class="p-n">Step 4</span><h3>Avoid them</h3><p>Turn each failure mode into a thing to prevent or eliminate.</p></div><div class="principle"><span class="p-n">Step 5</span><h3>Act on what remains</h3><p>Once the guaranteed-failure paths are removed, the route to success is much clearer.</p></div>
+<h2>Worked example</h2><p>A team wants a healthy culture. Inverting: how would we destroy morale? Reward politics, hide information, tolerate bad managers, never recognise good work. The list is vivid and specific. Simply refusing to do those four things does more for the culture than any abstract ‘values’ exercise. Failure was easier to define than success.</p>
+<h2>Common pitfalls</h2><ul><li>Treating inversion as merely negative thinking rather than a planning tool.</li><li>Listing failure modes but never converting them into concrete preventions.</li><li>Using only inversion — it complements forward planning, it does not replace it.</li></ul>
+<h2>Frequently asked questions</h2><div class="faq"><details><summary>Why is failure easier to define than success?</summary><p>Success has many uncertain paths; the obvious ways to fail are usually few and clear, so removing them is tractable.</p></details><details><summary>Is inversion just risk assessment?</summary><p>Related, but broader — it is a general habit of flipping a problem, useful for planning as well as risk.</p></details><details><summary>Can I use it on personal goals?</summary><p>Yes — ‘how would I ruin my health / finances / relationship?’ produces a sharp list of things to stop doing.</p></details></div>
+<h2>Related tools</h2><div class="related"><a class="card" href="../second-order-thinking/"><div class="card-body"><span class="card-cat">Decision making</span><div class="card-name">Second-order thinking</div><p class="card-desc">Ask ‘and then what?’ — trace the consequences of the consequences.</p></div></a><a class="card" href="../first-principles/"><div class="card-body"><span class="card-cat">Problem solving</span><div class="card-name">First principles</div><p class="card-desc">Strip a problem to its fundamental truths and reason up from there.</p></div></a><a class="card" href="../conflict-resolution-diagram/"><div class="card-body"><span class="card-cat">Problem solving</span><div class="card-name">Conflict Resolution Diagram</div><p class="card-desc">Find the win-win hidden beneath a conflict’s surface trade-off.</p></div></a></div>
+</article>
+<aside class="infobox"><div class="ib-top"></div>
+<div class="portrait mono">I</div>
+<div class="ib-body"><p class="ib-name">Inversion</p><p class="ib-tag">Problem solving</p>
+<div class="ib-row"><span class="ib-k">Category</span><span class="ib-v">Problem solving</span></div>
+<div class="ib-row"><span class="ib-k">Origin</span><span class="ib-v">Carl Jacobi’s ‘invert, always invert’; championed by Charlie Munger</span></div>
+<div class="ib-row"><span class="ib-k">Use when</span><span class="ib-v">A goal is hard to plan toward directly, or you want to stress-test a plan for hidden ways it could fail.</span></div>
+</div></aside>
+</div></div>
+<footer class="site-footer"><div class="spectrum-rule"></div><div class="wrap">
+<div class="foot"><div class="fbrand"><a class="brand" href="../../"><span class="theta">&#920;</span>&nbsp;NAVIGATOR</a>
+<p>An open reference for how the greatest people and companies think, build, and decide. Free, no login.</p></div>
+<div><h4>Libraries</h4><a href="../../people/">People</a><a href="../../businesses/">Businesses</a><a href="../../mental-models/">Mental Models</a><a href="../../decision-tools/">Decision Tools</a><a href="../../business-models/">Business Models</a></div><div><h4>Learn</h4><a href="../../books/">Books</a><a href="../../reading-lists/">Reading Lists</a><a href="../../guides/">Guides</a><a href="../../quotes/">Quotes</a><a href="../../paths/">Learning Paths</a></div><div><h4>Apply</h4><a href="../../tools/">Tools</a><a href="../../frameworks/">Frameworks</a><a href="../../moats/">Moats</a><a href="../../ai/">AI</a><a href="../../recommend/">What to study</a></div><div><h4>Site</h4><a href="../../about/">About</a><a href="../../newsletter/">Newsletter</a><a href="../../contact/">Contact</a><a href="../../search/">Search</a><a href="../../credits/">Credits</a></div></div>
+<div class="foot-legal"><a href="../../privacy/">Privacy</a><a href="../../terms/">Terms</a><a href="../../cookies/">Cookies</a><a href="../../refund/">Refund</a><a href="../../accessibility/">Accessibility</a><a href="../../disclaimer/">Disclaimer</a><span class="sp">&copy; 2026 Navigator</span></div>
+</div></footer>
+<script src="../../assets/js/main.js" defer></script>
+<script src="../../assets/js/wiki.js" defer></script>
+</body></html>

@@ -1,0 +1,4 @@
+# Navigator
+> Open encyclopedia: how the greatest people & companies think, build, and decide.
+
+Free, no login. Sections: people, businesses, mental-models, decision-tools, business-models, frameworks, moats, books, reading-lists, guides, quotes, paths, tools, ai.
