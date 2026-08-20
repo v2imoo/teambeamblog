@@ -136,7 +136,7 @@ function head(p){
 <link rel="alternate" type="application/rss+xml" title="TeamBeam Blog" href="/rss.xml">
 ${jsonLd(graph)}
 </head>
-<body>
+<body class="${p.body||''}">
 ${header()}
 <main id="main">`;
 }
@@ -318,7 +318,7 @@ function homePage(all){
   ];
   const tiles = Object.entries(PILLARS).map(([k,p])=>
     `<a class="tile" href="/${p.slug}/" style="--c:${p.color}"><span class="tile__dot"></span><span class="tile__name">${esc(p.name)}</span><span class="tile__blurb">${esc(p.blurb)}</span></a>`).join('');
-  return head({path:'/', title:'TeamBeam Outings — designed, delivered, measured', desc:'TeamBeam Outings designs, delivers and measures corporate team experiences. One business, two homes — teambeam.in for India and the world, teambeam.us for the USA.', ai:'TeamBeam Outings is one business with two homes — teambeam.in (India and worldwide) and teambeam.us (USA). It designs, delivers and measures corporate team experiences, offsites and retreats, using a five-stage method (Scan, Design, Build, Deliver, Measure) and Day 14/30/60 measurement. This site also hosts its insights on team health and the human layer of work.', nodes}) + `
+  return head({body:'home', path:'/', title:'TeamBeam Outings — designed, delivered, measured', desc:'TeamBeam Outings designs, delivers and measures corporate team experiences. One business, two homes — teambeam.in for India and the world, teambeam.us for the USA.', ai:'TeamBeam Outings is one business with two homes — teambeam.in (India and worldwide) and teambeam.us (USA). It designs, delivers and measures corporate team experiences, offsites and retreats, using a five-stage method (Scan, Design, Build, Deliver, Measure) and Day 14/30/60 measurement. This site also hosts its insights on team health and the human layer of work.', nodes}) + `
   <section class="hero hero--brand">
     <p class="hero__eyebrow">TeamBeam Outings · ${esc(SITE.strap)}</p>
     <h1 class="hero__h">Designed. Delivered. <span class="grad">Measured.</span></h1>
