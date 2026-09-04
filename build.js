@@ -48,6 +48,20 @@ const PILLARS = {
 const BEAM = Object.values(PILLARS).map(p => p.color); // the spectrum strip
 const BUILD_ID = Date.now(); // cache-bust the stylesheet on every deploy
 
+/* The eight offerings, market-neutral. Each is a "window" — a quiet route into the
+ * reader's own home (teambeam.in by default; upgraded to teambeam.us for US readers by the
+ * data-geo-svc handler in the footer). No comparison, no "go to the India site" — just doors. */
+const OFFERINGS = [
+  { name:'Team Experiences',          path:'/team-experiences',         blurb:'Focused experiences that build the one thing a team is missing — a few hours to a full day.' },
+  { name:'Offsites & Retreats',       path:'/offsites-retreats',        blurb:'Multi-day offsites and retreats, sourced, planned and run end to end, anywhere in the world.' },
+  { name:'Development & Facilitation', path:'/development-facilitation', blurb:'Expert facilitation, leadership sessions and assessment-led development.' },
+  { name:'Impact & CSR',              path:'/impact-csr',               blurb:'Team days that give back — building, greening and community work, done for real.' },
+  { name:'Beam Occasions',            path:'/beam-occasions',           blurb:'Marking the calendar so it means something. Secular, inclusive, never clichéd.' },
+  { name:'Beam Journeys',             path:'/beam-journeys',            blurb:'Longer arcs that move a team over weeks, not a single afternoon.' },
+  { name:'The Beam Platform',         path:'/beam-platform',            blurb:'Always-on team health — diagnostic, planning and measurement in one place.' },
+  { name:'Self-Serve & Kits',         path:'/self-serve-kits',          blurb:'Run it yourself. Ready-made kits and playbooks for teams that lead their own.' }
+];
+
 /* ---------------------------------------------------------------- HELPERS */
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function attr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
@@ -225,6 +239,17 @@ function card(a){
   </a>`;
 }
 
+function offerWindow(o, i){
+  const c = BEAM[i % BEAM.length];
+  const href = SITE.homes.in + o.path; // crawlers + non-JS get .in; US readers get .us via data-geo-svc
+  return `<a class="offer" href="${attr(href)}" data-geo-svc data-path="${attr(o.path)}" style="--c:${c}">
+    <span class="offer__edge"></span>
+    <span class="offer__name">${esc(o.name)}</span>
+    <span class="offer__blurb">${esc(o.blurb)}</span>
+    <span class="offer__go">Explore <span aria-hidden="true">&rarr;</span></span>
+  </a>`;
+}
+
 function relatedBlock(a, all){
   const same = all.filter(x=>x.slug!==a.slug && x.pillar===a.pillar).slice(0,2);
   const others = all.filter(x=>x.slug!==a.slug && x.pillar!==a.pillar).slice(0,3);
@@ -319,29 +344,49 @@ function homePage(all){
   const tiles = Object.entries(PILLARS).map(([k,p])=>
     `<a class="tile" href="/${p.slug}/" style="--c:${p.color}"><span class="tile__dot"></span><span class="tile__name">${esc(p.name)}</span><span class="tile__blurb">${esc(p.blurb)}</span></a>`).join('');
   return head({body:'home', path:'/', title:'TeamBeam Outings — designed, delivered, measured', desc:'TeamBeam Outings designs, delivers and measures corporate team experiences. One business, two homes — teambeam.in for India and the world, teambeam.us for the USA.', ai:'TeamBeam Outings is one business with two homes — teambeam.in (India and worldwide) and teambeam.us (USA). It designs, delivers and measures corporate team experiences, offsites and retreats, using a five-stage method (Scan, Design, Build, Deliver, Measure) and Day 14/30/60 measurement. This site also hosts its insights on team health and the human layer of work.', nodes}) + `
-  <section class="hero hero--brand">
-    <p class="hero__eyebrow">TeamBeam Outings · ${esc(SITE.strap)}</p>
-    <h1 class="hero__h">Designed. Delivered. <span class="grad">Measured.</span></h1>
-    <p class="hero__sub">We design, deliver and measure corporate team experiences — offsites, retreats and the everyday moments that make teams and organisations work. One business, at home wherever your team sits.</p>
-    <div class="hero__cta"><a class="cta" data-geo-cta href="${SITE.homes.go}">Talk to us</a><a class="cta cta--ghost" href="#insights">Read the insights</a></div>
+  <section class="hero hero--brand hero--split">
+    <div class="hero__lede">
+      <p class="hero__eyebrow">TeamBeam Outings · ${esc(SITE.strap)}</p>
+      <h1 class="hero__h">Designed. Delivered. <span class="grad">Measured.</span></h1>
+      <p class="hero__sub">We design, deliver and measure corporate team experiences — offsites, retreats and the everyday moments that make teams and organisations work. One business, at home wherever your team sits.</p>
+      <div class="hero__cta"><a class="cta" data-geo-cta href="${SITE.homes.go}">Talk to us</a><a class="cta cta--ghost" href="#offerings">See what we make</a></div>
+    </div>
+    <div class="hero__media">
+      <!-- ============================================================
+           HERO VIDEO SLOT
+           To add a film later, replace the contents of .hero__media-inner
+           with either:
+             <video autoplay muted loop playsinline poster="/assets/img/hero-poster.jpg"><source src="/assets/hero.mp4" type="video/mp4"></video>
+           or an embed:
+             <iframe src="https://player.vimeo.com/video/ID?background=1" allow="autoplay; fullscreen" title="TeamBeam"></iframe>
+           The panel size, radius and beam are already reserved — nothing else changes.
+           ============================================================ -->
+      <div class="hero__media-inner">
+        <span class="hero__media-mark" aria-hidden="true">&#923;</span>
+        <span class="hero__media-word">TEAMBEAM <span class="am">OUTINGS</span></span>
+        <span class="hero__media-tag">${esc(SITE.tagline)}</span>
+      </div>
+      <div class="hero__media-beam" aria-hidden="true">${BEAM.map(c=>`<i style="background:${c}"></i>`).join('')}</div>
+    </div>
   </section>
 
-  <section class="approach">
-    <h2 class="sech">What we do</h2>
-    <p class="approach__lead">We build team experiences around evidence, not habit — and then we measure whether they worked. Every engagement runs through one method.</p>
-    <div class="approach__steps">
+  <section class="method">
+    <p class="method__lead">We build team experiences around evidence, not habit — and then we measure whether they worked. Every engagement runs through one method.</p>
+    <div class="method__steps" aria-label="Our method">
       <span>Scan</span><span>Design</span><span>Build</span><span>Deliver</span><span>Measure</span>
     </div>
-    <div class="approach__range">
-      <div><h3>Team experiences</h3><p>Focused experiences that build the specific thing a team is missing — from a few hours to a full day.</p></div>
-      <div><h3>Offsites &amp; retreats</h3><p>Multi-day offsites and retreats, sourced, planned and run end to end, anywhere in the world.</p></div>
-      <div><h3>Occasions</h3><p>Marking the moments that matter — inclusively, with meaning, and without the usual clichés.</p></div>
-      <div><h3>Measurement</h3><p>We read team health before and after, at Day 14, 30 and 60, so you can prove the change held.</p></div>
+  </section>
+
+  <section class="offers" id="offerings">
+    <div class="offers__head">
+      <h2>What we make</h2>
+      <p>Eight ways in. Pick the one that fits where your team is — each opens into the work on your home.</p>
     </div>
+    <div class="offers__grid">${OFFERINGS.map(offerWindow).join('')}</div>
   </section>
 
   <section class="homes">
-    <h2 class="sech">One business, two homes</h2>
+    <h2 class="homes__h">One business, two homes</h2>
     <p class="homes__lead">Wherever your team sits, there is a home for you. The same business, the same method, the same people — two front doors, not two companies.</p>
     <div class="homes__grid">
       <a class="homecard" href="${SITE.homes.in}">
