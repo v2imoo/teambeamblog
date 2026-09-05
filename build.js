@@ -241,13 +241,17 @@ function card(a){
 
 function offerWindow(o, i){
   const c = BEAM[i % BEAM.length];
-  const href = SITE.homes.in + o.path; // crawlers + non-JS get .in; US readers get .us via data-geo-svc
-  return `<a class="offer" href="${attr(href)}" data-geo-svc data-path="${attr(o.path)}" style="--c:${c}">
+  const inUrl = SITE.homes.in + o.path;  // live on teambeam.in
+  const usUrl = SITE.homes.us + o.path;  // live on teambeam.us (same slug on both homes)
+  return `<div class="offer" style="--c:${c}">
     <span class="offer__edge"></span>
     <span class="offer__name">${esc(o.name)}</span>
     <span class="offer__blurb">${esc(o.blurb)}</span>
-    <span class="offer__go">Explore <span aria-hidden="true">&rarr;</span></span>
-  </a>`;
+    <span class="offer__routes">
+      <a class="offer__route" href="${attr(inUrl)}" aria-label="${attr(o.name+' — India (teambeam.in)')}">India <span aria-hidden="true">&#8599;</span></a>
+      <a class="offer__route" href="${attr(usUrl)}" aria-label="${attr(o.name+' — US (teambeam.us)')}">US <span aria-hidden="true">&#8599;</span></a>
+    </span>
+  </div>`;
 }
 
 function relatedBlock(a, all){
@@ -380,7 +384,7 @@ function homePage(all){
   <section class="offers" id="offerings">
     <div class="offers__head">
       <h2>What we make</h2>
-      <p>Eight ways in. Pick the one that fits where your team is — each opens into the work on your home.</p>
+      <p>Eight ways in. Pick the one that fits where your team is, and open it on either home — India or the US.</p>
     </div>
     <div class="offers__grid">${OFFERINGS.map(offerWindow).join('')}</div>
   </section>
