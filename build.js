@@ -210,18 +210,20 @@ function homesRouteBlock(){
   </div>`;
 }
 
-// US deep-leaf parity: paths verified live on teambeam.us (from its nav). Others fall back to a verified parent.
+// US deep-leaf parity — every path below is verified present on teambeam.us (from the live sitemap).
 const US_SHARED = new Set([
   '/why-teambeam','/why-teambeam-the-method','/why-teambeam-measurement-impact','/why-teambeam-results',
   '/who-we-serve','/development-facilitation','/beam-occasions','/careers',
-  '/what-we-do','/destinations','/resources','/about'
+  '/what-we-do','/destinations','/resources','/about',
+  '/occasions','/who-we-serve-industries-technology','/who-we-serve-moments-onboarding',
+  '/who-we-serve-moments-post-merger','/who-we-serve-moments-sales-kickoff'
 ]);
 function usTargetFor(path){
   if(!path) return '';
   if(US_SHARED.has(path)) return path;                 // exact page confirmed on both homes
-  if(path === '/occasions') return '/beam-occasions';  // occasions offering, live on both
-  if(path.startsWith('/who-we-serve')) return '/who-we-serve'; // leaf not verified on .us -> verified hub
-  return path;                                         // offerings etc. already verified shared
+  if(path === '/occasions') return '/beam-occasions';  // safety net for any unverified path
+  if(path.startsWith('/who-we-serve')) return '/who-we-serve';
+  return path;
 }
 
 function footer(){
