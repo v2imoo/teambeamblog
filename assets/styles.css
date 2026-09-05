@@ -290,6 +290,15 @@ body.home{
 .foot__legal{border-top:1px solid #21384E;padding:18px 20px;text-align:center;color:#8FA3B6;font-size:.82rem}
 .foot__legal a{color:#C6D2DE}
 
+/* Footer dual-route map — both homes */
+.foot__homes{max-width:var(--wrap);margin:0 auto;padding:4px 20px 30px}
+.foot__homes-h{display:block;font-family:"TB Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#8FA3B6;margin:0 0 14px}
+.foot__homes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px 22px}
+.fh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fh__n{color:#fff;font-weight:600;font-size:.92rem;min-width:8.5em}
+.fh a{color:#C6D2DE;text-decoration:none;font-family:"TB Mono",monospace;font-size:.76rem}
+.fh a:hover{color:var(--amber)}
+
 /* ---- Responsive (single source, no re-declared display conflicts) ---- */
 @media (max-width:860px){
   .nav__links{display:none}
