@@ -21,6 +21,7 @@ const SITE = {
   tagline: 'Designed. Delivered. Measured.',
   strap: 'People · Teams · Organisations · Beyond',
   email: 'start@teambeam.in',
+  emails: { in: 'start@teambeam.in', us: 'start@teambeam.us' },
   homes: { in: 'https://teambeam.in', us: 'https://teambeam.us', go: 'https://teambeam.in/go' },
   social: {
     LinkedIn: 'https://www.linkedin.com/company/teambeam',
@@ -109,6 +110,10 @@ function readTime(body){const w=body.split(/\s+/).length;return Math.max(2,Math.
 function orgNode(){
   return {
     '@type':'Organization', name:'TeamBeam', url:SITE.homes.in, email:SITE.email,
+    contactPoint:[
+      {'@type':'ContactPoint',email:SITE.emails.in,areaServed:'IN',contactType:'customer service'},
+      {'@type':'ContactPoint',email:SITE.emails.us,areaServed:'US',contactType:'customer service'}
+    ],
     description:'TeamBeam designs, delivers and measures corporate team experiences. Diagnostic-first design and Day 14/30/60 measurement.',
     sameAs:[SITE.homes.us, ...Object.values(SITE.social)]
   };
@@ -187,6 +192,38 @@ function header(){
 </div>`;
 }
 
+// Both office mailboxes, reader-facing — dual everywhere a contact is shown.
+function mailBoth(){
+  return `<a href="mailto:${SITE.emails.in}">${SITE.emails.in}</a> for India and the world, or <a href="mailto:${SITE.emails.us}">${SITE.emails.us}</a> for the USA`;
+}
+// Top sections that exist on BOTH homes (verified live) — the footer's dual-route map.
+const HOMES_NAV = [
+  ['What we do','/what-we-do'], ['How we work','/why-teambeam'], ["Who it's for",'/who-we-serve'],
+  ['Where we go','/destinations'], ['Tools','/resources'], ['About','/about']
+];
+function homesRouteBlock(){
+  return `<div class="foot__homes">
+    <span class="foot__homes-h">Explore both homes</span>
+    <div class="foot__homes-grid">
+      ${HOMES_NAV.map(([n,p])=>`<span class="fh"><span class="fh__n">${esc(n)}</span><a href="${attr(SITE.homes.in+p)}" rel="noopener">India <span aria-hidden="true">&#8599;</span></a><a href="${attr(SITE.homes.us+p)}" rel="noopener">US <span aria-hidden="true">&#8599;</span></a></span>`).join('')}
+    </div>
+  </div>`;
+}
+
+// US deep-leaf parity: paths verified live on teambeam.us (from its nav). Others fall back to a verified parent.
+const US_SHARED = new Set([
+  '/why-teambeam','/why-teambeam-the-method','/why-teambeam-measurement-impact','/why-teambeam-results',
+  '/who-we-serve','/development-facilitation','/beam-occasions','/careers',
+  '/what-we-do','/destinations','/resources','/about'
+]);
+function usTargetFor(path){
+  if(!path) return '';
+  if(US_SHARED.has(path)) return path;                 // exact page confirmed on both homes
+  if(path === '/occasions') return '/beam-occasions';  // occasions offering, live on both
+  if(path.startsWith('/who-we-serve')) return '/who-we-serve'; // leaf not verified on .us -> verified hub
+  return path;                                         // offerings etc. already verified shared
+}
+
 function footer(){
   const soc = Object.entries(SITE.social).map(([n,u])=>`<a href="${attr(u)}" rel="noopener">${esc(n)}</a>`).join('');
   const cols = Object.entries(PILLARS).map(([k,p])=>`<a href="/${p.slug}/">${esc(p.name)}</a>`).join('');
@@ -198,7 +235,7 @@ function footer(){
       <span class="brand__mark" aria-hidden="true">&#923;</span>
       <span class="brand__word">TEAM<b>BEAM</b> <span class="brand__blog">blog</span></span>
       <p class="foot__line">${esc(SITE.tagline)}<br>${esc(SITE.strap)}</p>
-      <p class="foot__write">Have a view, a question, or a story? Write to us at <a href="mailto:${SITE.email}">${SITE.email}</a>.</p>
+      <p class="foot__write">Have a view, a question, or a story? Write to us at ${mailBoth()}.</p>
     </div>
     <nav class="foot__cols" aria-label="Pillars">${cols}</nav>
     <div class="foot__meta">
@@ -206,6 +243,7 @@ function footer(){
       <a class="cta cta--ghost" data-geo-cta href="${SITE.homes.go}">Talk to us</a>
     </div>
   </div>
+  ${homesRouteBlock()}
   <div class="foot__legal">One business, two homes — <a href="${SITE.homes.in}">teambeam.in</a> for India and the world, <a href="${SITE.homes.us}">teambeam.us</a> for the USA. &copy; ${new Date().getFullYear()} TeamBeam.</div>
 </footer>
 <script>
@@ -279,11 +317,10 @@ function articlePage(a, all){
   ];
   if(faq.length) nodes.push({ '@type':'FAQPage', mainEntity: faq.map(f=>({'@type':'Question',name:f.q,acceptedAnswer:{'@type':'Answer',text:f.a}})) });
 
-  const svcPath = a.service_path || '';
-  const svcBase = a.route==='us' ? SITE.homes.us : SITE.homes.in; // neutral + India default to .in
-  const geoSvc = a.route==='go' && svcPath; // only neutral articles swap host to the reader's home
-  const svcUrl = svcPath ? svcBase+svcPath : (a.service_url || svcBase);
+  const svcPath  = a.service_path || '';
   const svcLabel = a.service_label || 'See how we work';
+  const svcInUrl = svcPath ? SITE.homes.in + svcPath : (a.service_url || SITE.homes.in);
+  const svcUsUrl = svcPath ? SITE.homes.us + usTargetFor(svcPath) : (a.service_url ? '' : SITE.homes.us);
 
   const relHtml = `
     <section class="rel">
@@ -307,8 +344,11 @@ function articlePage(a, all){
     <div class="art__body">${md(a.body)}</div>
     <aside class="art__cta">
       <p class="art__ctahead">Want this for your team?</p>
-      <p>Tell us what you are trying to change. Write to <a href="mailto:${SITE.email}">${SITE.email}</a>, or see the work.</p>
-      <a class="cta" href="${attr(svcUrl)}"${geoSvc?` data-geo-svc data-path="${attr(svcPath)}"`:''}>${esc(svcLabel)}</a>
+      <p>Tell us what you are trying to change. Write to ${mailBoth()} — or see the work on either home:</p>
+      <span class="offer__routes">
+        <a class="offer__route" href="${attr(svcInUrl)}" aria-label="${attr(svcLabel+' — India (teambeam.in)')}">India <span aria-hidden="true">&#8599;</span></a>
+        ${svcUsUrl?`<a class="offer__route" href="${attr(svcUsUrl)}" aria-label="${attr(svcLabel+' — US (teambeam.us)')}">US <span aria-hidden="true">&#8599;</span></a>`:''}
+      </span>
     </aside>
     ${faqHtml}
   </article>
@@ -333,7 +373,7 @@ function pillarPage(key, all){
       <h1>${esc(p.name)}</h1>
       <p>${esc(p.blurb)}</p>
     </div>
-    ${list.length?`<div class="grid grid--3">${list.map(card).join('')}</div>`:`<p class="empty">Articles in this pillar are on the way. In the meantime, write to us at <a href="mailto:${SITE.email}">${SITE.email}</a>.</p>`}
+    ${list.length?`<div class="grid grid--3">${list.map(card).join('')}</div>`:`<p class="empty">Articles in this pillar are on the way. In the meantime, write to us at ${mailBoth()}.</p>`}
   </section>` + footer();
 }
 
@@ -436,8 +476,8 @@ function homePage(all){
   <section class="band">
     <div class="band__in">
       <h2>No comment box. A conversation instead.</h2>
-      <p>We would rather hear from you directly than run a comment thread. Tell us where your team is stuck, or what you would argue with here.</p>
-      <a class="cta" href="mailto:${SITE.email}">Write to us</a>
+      <p>We would rather hear from you directly than run a comment thread. Write to us at ${mailBoth()} — tell us where your team is stuck, or what you would argue with here.</p>
+      <a class="cta" data-geo-cta href="${SITE.homes.go}">Talk to us</a>
     </div>
   </section>` + footer();
 }
@@ -459,7 +499,7 @@ function aboutPage(){
     <h1>One business. Two homes. One place to think.</h1>
     <p>TeamBeam designs, delivers and measures corporate team experiences. We work as one business with two market homes: <a href="${SITE.homes.in}">teambeam.in</a> for India and the world, and <a href="${SITE.homes.us}">teambeam.us</a> for the USA.</p>
     <p>This blog sits above both. It is where we set out how we think about team health, measurement, and the human layer of work — without a sales pitch on every line. When something here is useful to you, the right home is one link away.</p>
-    <p>We do not run a comment section. If you want to push back, add to a point, or ask a question, write to us at <a href="mailto:${SITE.email}">${SITE.email}</a>. We read every message.</p>
+    <p>We do not run a comment section. If you want to push back, add to a point, or ask a question, write to us at ${mailBoth()}. We read every message.</p>
     <a class="cta" data-geo-cta href="${SITE.homes.go}">Talk to us</a>
   </section>` + footer();
 }
