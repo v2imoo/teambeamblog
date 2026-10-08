@@ -333,4 +333,4 @@ body.home{
 .beam-dock__x:hover{background:var(--ink);color:#fff}
 @media (max-width:640px){.beam-dock__box{height:84px}}
 @media print{.beam-dock{display:none}}
-.hero__media .beam-hero{position:absolute;top:3%;bottom:6px;left:50%;transform:translateX(-50%)}
+.hero__media .beam-hero{position:absolute;top:2%;bottom:7px;left:50%;transform:translateX(-50%)}
