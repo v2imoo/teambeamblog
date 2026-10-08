@@ -408,9 +408,7 @@ function homePage(all){
            The panel size, radius and beam are already reserved — nothing else changes.
            ============================================================ -->
       <div class="hero__media-inner">
-        <span class="hero__media-mark" aria-hidden="true">&#923;</span>
-        <span class="hero__media-word">TEAMBEAM <span class="am">OUTINGS</span></span>
-        <span class="hero__media-tag">${esc(SITE.tagline)}</span>
+        ${beamHero({cta:'.hero__cta .cta', hideOn:'.foot', sizes:'(max-width:820px) 150px, 185px'})}
       </div>
       <div class="hero__media-beam" aria-hidden="true">${BEAM.map(c=>`<i style="background:${c}"></i>`).join('')}</div>
     </div>
@@ -481,7 +479,19 @@ function homePage(all){
       <p>We would rather hear from you directly than run a comment thread. Write to us at ${mailBoth()} — tell us where your team is stuck, or what you would argue with here.</p>
       <a class="cta" data-geo-cta href="${SITE.homes.go}">Talk to us</a>
     </div>
-  </section>` + footer();
+  </section>` + footer().replace('</body></html>', beamScript() + '\n</body></html>');
+}
+
+/* ---------------------------------------------------------------- BEAM MASCOT
+ * Home page only. Media is flat in assets/img/ and every name carries -v1, so a new
+ * cut of Beam ships as -v2 files (the CDN may hold /assets/* for a year).
+ * The script is assets/beam-mascot.js (minified), inlined at the end of the home page. */
+const BEAM_IMG = ext => `/assets/img/beam-v1-480.${ext} 288w, /assets/img/beam-v1-960.${ext} 576w`;
+function beamHero(o){
+  return `<div class="beam-hero" data-beam data-wave="/assets/img/beam-wave-v1.mp4" data-cta="${attr(o.cta)}" data-hide-on="${attr(o.hideOn)}" aria-hidden="true"><picture><source type="image/avif" srcset="${BEAM_IMG('avif')}" sizes="${o.sizes}"><source type="image/webp" srcset="${BEAM_IMG('webp')}" sizes="${o.sizes}"><img class="beam__still" src="/assets/img/beam-v1-480.png" srcset="${BEAM_IMG('png')}" sizes="${o.sizes}" width="576" height="960" alt="" decoding="async"></picture></div>`;
+}
+function beamScript(){
+  return `<script>${fs.readFileSync(path.join(ASSETS,'beam-mascot.js'),'utf8').trim()}</script>`;
 }
 
 function insightsPage(all){
@@ -535,6 +545,8 @@ function run(){
   cp(path.join(ASSETS,'styles.css'), path.join(OUT,'assets','styles.css'));
   const fdir=path.join(ASSETS,'fonts');
   if(fs.existsSync(fdir)) fs.readdirSync(fdir).forEach(f=>cp(path.join(fdir,f),path.join(OUT,'assets','fonts',f)));
+  const idir=path.join(ASSETS,'img');
+  if(fs.existsSync(idir)) fs.readdirSync(idir).forEach(f=>cp(path.join(idir,f),path.join(OUT,'assets','img',f)));
 
   // sitemap
   const urls = ['/', '/insights/', '/about/', ...Object.values(PILLARS).map(p=>'/'+p.slug+'/'), ...arts.map(a=>'/'+a.slug+'/')];
